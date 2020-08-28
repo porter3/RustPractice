@@ -19,8 +19,11 @@ fn main() {
             .read_line(&mut guess) // returns an io::Result() object
             .expect("Failed to read line");
 
-        // shadow previous guess variable.
-        let guess: u32 = guess.trim().parse().expect("Please type a number.");
+        // shadow previous guess variable
+        let guess: u32 = match guess.trim().parse() {
+            Ok(number) => number,
+            Err(_) => continue // underscore is catch-all value - says that we want to match all Errs no matter what's inside
+        };
 
         println!("Your guess: {}", guess);
 
@@ -31,7 +34,6 @@ fn main() {
                 println!("You guessed the number, you win!");
                 break;
             }
-
         }
     }
 
